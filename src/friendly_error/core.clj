@@ -2,7 +2,6 @@
 
 (defn friendly-forms
   [fun & checks]
-  (prn [fun checks])
   (let [anames (map symbol
                     (map (partial str "arg")
                          (range (count checks))))
@@ -21,7 +20,7 @@
   [fun & checks]
   `(do
      (alter-var-root (var ~fun)
-                     friendly ~@checks)
+                     friendly-fn ~@checks)
      (var ~fun)))
 
 ;;(friendly map is-function? is-collection?)

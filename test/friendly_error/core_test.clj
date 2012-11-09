@@ -2,6 +2,10 @@
   (:use clojure.test
         friendly-error.core))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest map-test
+  (def tmap map)
+  (make-friend! tmap fn? coll?)
+  (testing "map takes fn and col"
+    (is (= [3 4] (tmap inc [2 3])))
+    (is (thrown? AssertionError
+                 (tmap 9 [2 3])))))
