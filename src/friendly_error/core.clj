@@ -8,9 +8,10 @@
         achecks (vec (partition
                  2
                  (interleave checks anames)))]
-   `(fn [~@anames]
-            {:pre ~achecks}
-            (~fun ~@anames))))
+    `(vary-meta (fn [~@anames]
+                  {:pre ~achecks}
+                  (~fun ~@anames))
+                assoc :friend ~fun)))
 
 (defn friendly-fn
   [fun & checks]
@@ -22,6 +23,11 @@
      (alter-var-root (var ~fun)
                      friendly-fn ~@checks)
      (var ~fun)))
+
+(defmacro un-friend! [fun]
+  `(when-let [friend# (:friend (meta ~fun))]
+     (alter-var-root (var ~fun)
+                     (constantly friend#))))
 
 ;;(friendly map is-function? is-collection?)
 ;;
