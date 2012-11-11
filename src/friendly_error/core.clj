@@ -86,6 +86,4 @@
       (constantly (:fun friend#)))
      friend#))
 
-;;(friendly map is-function? is-collection?)
-;;
 
